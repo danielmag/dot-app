@@ -4,15 +4,18 @@
   var BACKGROUND_COLOR_RGB = [255, 255, 255];
   var BACKGROUND_COLOR_LAB = rgb2lab(BACKGROUND_COLOR_RGB);
 
+  var windowWidth = window.innerWidth;
+  var windowHeight = window.innerHeight;
+
   var canvas = document.getElementById("dot-canvas");
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+  canvas.width = windowWidth;
+  canvas.height = windowHeight;
 
   var ctx = canvas.getContext("2d");
 
   function addDot(percentX, percentY, color, radius) {
-    var realCoordX = (percentX / 100) * window.innerWidth;
-    var realCoordY = (percentY / 100) * window.innerHeight;
+    var realCoordX = (percentX / 100) * windowWidth;
+    var realCoordY = (percentY / 100) * windowHeight;
 
     ctx.beginPath();
     ctx.fillStyle = color;
@@ -42,8 +45,8 @@
   });
 
   document.addEventListener('click', function(e) {
-    var percentX = (e.pageX / window.innerWidth) * 100;
-    var percentY = (e.pageY / window.innerHeight) * 100;
+    var percentX = (e.pageX / windowWidth) * 100;
+    var percentY = (e.pageY / windowHeight) * 100;
     var color = rgbArrayToString(getSuitableRandomColor());
     var radius = RandomUtils.integer(1, 15);
 
