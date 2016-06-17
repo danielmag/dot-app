@@ -37,7 +37,9 @@ end
 post '/add-dot' do
   dot = {
     x: params['x'],
-    y: params['y']
+    y: params['y'],
+    color: params['color'],
+    radius: params['radius']
   }
 
   GlobalState[:dots] << dot

@@ -1,4 +1,4 @@
-var Requests = (function() {
+var RequestUtils = (function() {
   'use strict';
 
   var requestUtils = {};
@@ -18,7 +18,7 @@ var Requests = (function() {
       '/add-dot', true);
     request.setRequestHeader('Content-Type',
       'application/x-www-form-urlencoded; charset=UTF-8');
-    request.send(data);
+    request.send(objToData(data));
   }
 
   return requestUtils;
@@ -49,7 +49,12 @@ var Requests = (function() {
     var percentX = (e.pageX / window.innerWidth) * 100;
     var percentY = (e.pageY / window.innerHeight) * 100;
 
-    Requests.post('x=' + percentX + '&' + 'y=' + percentY);
+    RequestUtils.post({
+      x: percentX,
+      y: percentY,
+      color: color,
+      radius: radius
+    });
 
     addDot(percentX, percentY);
   });
