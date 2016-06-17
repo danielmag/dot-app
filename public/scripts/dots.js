@@ -37,7 +37,7 @@ var Requests = (function() {
   function addDot(percentX, percentY) {
     var realCoordX = (percentX / 100) * window.innerWidth;
     var realCoordY = (percentY / 100) * window.innerHeight;
-    ctx.fillRect( realCoordX, realCoordY, 2, 2 );
+    ctx.fillRect( realCoordX, realCoordY, 1, 1 );
   }
 
   var initialDots = JSON.parse(canvas.getAttribute("data-initial-dots"));
