@@ -11,7 +11,7 @@ var RandomUtils = (function() {
     var r = this.integer(0, 255);
     var g = this.integer(0, 255);
     var b = this.integer(0, 255);
-    return 'rgb(' + r + ' ,' + g + ' ,' + b + ')';
+    return [r, g, b];
   }
 
   return randomUtils;
@@ -46,6 +46,9 @@ var RequestUtils = (function() {
 (function() {
   'use strict';
 
+  var BACKGROUND_COLOR_RGB = [255, 255, 255];
+  var BACKGROUND_COLOR_LAB = rgb2lab(BACKGROUND_COLOR_RGB);
+
   var canvas = document.getElementById("dot-canvas");
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
@@ -53,12 +56,27 @@ var RequestUtils = (function() {
   var ctx = canvas.getContext("2d");
 
   function addDot(percentX, percentY, color, radius) {
-    ctx.beginPath();
     var realCoordX = (percentX / 100) * window.innerWidth;
     var realCoordY = (percentY / 100) * window.innerHeight;
+
+    ctx.beginPath();
     ctx.fillStyle = color;
     ctx.arc(realCoordX, realCoordY, radius, 0, 2 * Math.PI);
     ctx.fill();
+  }
+
+  // get a color visually different enough from the background
+  function getSuitableRandomColor(threshold) {
+    var threshold = threshold || 10;
+    var color = RandomUtils.colorRgb();
+    while(deltaE(rgb2lab(color), BACKGROUND_COLOR_LAB) <= threshold) {
+      color = RandomUtils.colorRgb();
+    }
+    return color;
+  }
+
+  function toRgbString(rgbArray) {
+    return 'rgb(' + rgbArray.join(', ') + ')';
   }
 
   var initialDots = JSON.parse(canvas.getAttribute("data-initial-dots"));
@@ -71,7 +89,7 @@ var RequestUtils = (function() {
   document.addEventListener('click', function(e) {
     var percentX = (e.pageX / window.innerWidth) * 100;
     var percentY = (e.pageY / window.innerHeight) * 100;
-    var color = RandomUtils.colorRgb();
+    var color = toRgbString(getSuitableRandomColor());
     var radius = RandomUtils.integer(1, 15);
 
     RequestUtils.post({
