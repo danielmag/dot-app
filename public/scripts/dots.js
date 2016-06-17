@@ -30,7 +30,7 @@
     return color;
   }
 
-  function toRgbString(rgbArray) {
+  function rgbArrayToString(rgbArray) {
     return 'rgb(' + rgbArray.join(', ') + ')';
   }
 
@@ -44,7 +44,7 @@
   document.addEventListener('click', function(e) {
     var percentX = (e.pageX / window.innerWidth) * 100;
     var percentY = (e.pageY / window.innerHeight) * 100;
-    var color = toRgbString(getSuitableRandomColor());
+    var color = rgbArrayToString(getSuitableRandomColor());
     var radius = RandomUtils.integer(1, 15);
 
     RequestUtils.post({
