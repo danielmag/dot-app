@@ -56,14 +56,15 @@ var RequestUtils = (function() {
     ctx.beginPath();
     var realCoordX = (percentX / 100) * window.innerWidth;
     var realCoordY = (percentY / 100) * window.innerHeight;
-    ctx.fillRect(realCoordX, realCoordY, radius, radius);
     ctx.fillStyle = color;
+    ctx.arc(realCoordX, realCoordY, radius, 0, 2 * Math.PI);
+    ctx.fill();
   }
 
   var initialDots = JSON.parse(canvas.getAttribute("data-initial-dots"));
   initialDots.forEach(function(d) {
     var color = d.color || "rgb(0, 0, 0)";
-    var radius = d.radius || 1;
+    var radius = d.radius || 0.5;
     addDot(d.x, d.y, color, radius);
   });
 
