@@ -36,7 +36,7 @@
 
   var initialDots = JSON.parse(canvas.getAttribute("data-initial-dots"));
   initialDots.forEach(function(d) {
-    var color = d.color || "rgb(0, 0, 0)";
+    var color = d.color || rgbArrayToString([0, 0, 0]);
     var radius = d.radius || 0.5;
     addDot(d.x, d.y, color, radius);
   });
